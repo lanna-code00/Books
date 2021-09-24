@@ -20,10 +20,13 @@ import { routes } from './routes';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.use(VueRouter, Vuetify);
+Vue.use(VueRouter);
+Vue.use(Vuetify);
 Vue.use(VueAxios, axios);
 
- 
+const vuetify = new Vuetify();
+import 'vuetify/dist/vuetify.min.css';
+
 const router = new VueRouter({
     mode: 'history',
     routes: routes
@@ -31,5 +34,6 @@ const router = new VueRouter({
  
 const app = new Vue({
     router: router,
+    vuetify,
     render: h => h(App),
 }).$mount('#app');;

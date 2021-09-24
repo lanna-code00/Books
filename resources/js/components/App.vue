@@ -1,18 +1,46 @@
 <template>
-    <div class="container"> 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse">
-                <div class="navbar-nav">
-                    <router-link to="/" class="nav-item nav-link">Products List</router-link>
-                    <router-link to="/create" class="nav-item nav-link">Create Product</router-link>
-                </div>
-            </div>
-        </nav>
+  <v-card
+    style="max-width: 100%"
+    class="mx-auto"
+  >
 
-        <router-view> </router-view>
-    </div>
+    <v-app-bar
+      dark
+      color="pink"
+    >
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+      <v-toolbar-title>My Books</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+     <router-link to="/" style="text-decoration: none">
+      <v-btn icon>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+     </router-link>
+
+       <v-btn icon>
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+
+    </v-app-bar>
+
+    <v-container>
+     
+      <router-view></router-view>
+    </v-container>
+    <!-- <router-view></router-view> -->
+  </v-card>
 </template>
  
 <script>
-    export default {}
+export default {
+    name: 'App',
+   
+}
 </script>
