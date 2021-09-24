@@ -15,24 +15,56 @@ class BookController extends Controller
         return $response;
     }
 
-    public function create(){
+    public function create(Request $request){
         $response = Http::get('https://anapioficeandfire.com/api/books');
         $data = json_decode($response->body());
-        foreach ($data as $value) {
-            foreach ($value->authors as $newvalue) {
-           $book = new Book();
-           $book->name = $value->name;
-           $book->isbn = $value->isbn;
-               $book->authors = $newvalue;
-               $book->country = $value->country;
-               $book->number_of_pages = $value->numberOfPages;
-               $book->publisher = $value->publisher;
-               $book->release_date = $value->released;
-               $book->save();
-            }
+        if(!$request)
+        {
+                foreach ($data as $value) {
+                    foreach ($value->authors as $newvalue) {
+                $book = new Book();
+                $book->name = $value->name;
+                $book->isbn = $value->isbn;
+                    $book->authors = $newvalue;
+                    $book->country = $value->country;
+                    $book->number_of_pages = $value->numberOfPages;
+                    $book->publisher = $value->publisher;
+                    $book->release_date = $value->released;
+                    $book->save();
+                    }
+                }
+                return 'saved';
+        } else {
+            Book::create($request->all());
+            return $request;
         }
-        return 'saved';
         // return $flattenarray;
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $updatebook = Book::where('id', $id)->first();
+            $updatebook->name = $request->name;
+            $updatebook->isbn = $request->isbn;
+            $updatebook->authors = $request->authors;
+            $updatebook->country = $request->country;
+            $updatebook->number_of_pages = $request->numberOfPages;
+            $updatebook->publisher = $request->publisher;
+            $updatebook->release_date = $request->released;
+            $updatebook->save();
+            return $updatebook;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $delete = Book::where('id',$id)->delete();
+        return $delete;
     }
 
 }
