@@ -101,19 +101,23 @@
             <v-btn
                 outlined
                 text
+                color="grey darken-4"
                 class="col-md-6 "
                 @click="updateBook()"
             >
-                Save
+                Update
             </v-btn>
+
 
             <v-btn
                 outlined
                 text
                 class="col-md-6"
+                @click="backHome()"
             >
                 Cancel
             </v-btn>
+
 
         </div>
     </v-card-actions>
@@ -123,6 +127,7 @@
 <script>
 import moment from "moment";
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 export default {
    name: "EditProduct",
@@ -149,6 +154,10 @@ export default {
    methods: {
     save (date) {
         this.$refs.menu.save(date)
+      },
+
+     backHome(){
+     this.$router.push({ name: 'home' });
       },
 
       editProduct(productId) {

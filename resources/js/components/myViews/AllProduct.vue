@@ -1,7 +1,22 @@
 <template>
     <div>
+      <div class="row mx-auto">
+        <div class="col-md-9">
+         <h3 class="text-center m-3 col-md-12">LIBRARY</h3>
+        </div>
+        <div class="col-md-3 float-end mt-4">
+          <div class="input-group">
+          <input type="text" v-model="searchBooks" class="form-control" placeholder="Search books..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <span class="input-group-text" style="height: 37px" id="basic-addon2">
+             <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+          </span>
+        </div>
+        </div>
+      </div>
                  <div class="row" dense>
-        <div class="col-md-4 p-1" v-for="(book, i) in allbooks" :key="i">
+        <div class="col-md-4 p-1" v-for="(book, i) in filteredNames" :key="i">
           <v-card
             :style="{backgroundColor: randomColor}"
             color="#385F73"
@@ -80,9 +95,22 @@ export default {
         return {
             allbooks: [],
             deleteId: "",
-            randomColor: '#'+Math.floor(Math.random()*16777215).toString(16)
+            randomColor: '#'+Math.floor(Math.random()*16777215).toString(16),
+            searchBooks: ""
         }
     },
+
+    computed: {
+    filteredList() {
+      return this.allbooks.filter(post => {
+        return post.name.toLowerCase().includes(this.searchBooks.toLowerCase())
+      })
+    },
+    filteredNames() {
+    let filter = new RegExp(this.searchBooks, 'i');
+    return this.allbooks.filter(el => el.name.match(filter) || el.country.match(filter) || el.publisher.match(filter) || el.release_date.match(filter))
+  }
+  },
 
     methods: {
             // function for viewing books

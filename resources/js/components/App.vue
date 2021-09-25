@@ -14,9 +14,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
 
      <router-link to="/" style="text-decoration: none">
       <v-btn icon>
@@ -24,9 +21,11 @@
       </v-btn>
      </router-link>
 
+     <router-link to="/create" style="text-decoration: none">
        <v-btn icon title="Add book">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+     </router-link>
 
     </v-app-bar>
 
