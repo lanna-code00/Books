@@ -41,16 +41,21 @@ class BookController extends Controller
         // return $flattenarray;
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id){
+        $updatebook = Book::findOrFail($id);
+        return $updatebook;
+    }
+
+    public function update(Request $request, $id)
     {
         $updatebook = Book::where('id', $id)->first();
             $updatebook->name = $request->name;
             $updatebook->isbn = $request->isbn;
-            $updatebook->authors = $request->authors;
+            $updatebook->authors = $request->author;
             $updatebook->country = $request->country;
-            $updatebook->number_of_pages = $request->numberOfPages;
+            $updatebook->number_of_pages = $request->pages;
             $updatebook->publisher = $request->publisher;
-            $updatebook->release_date = $request->released;
+            $updatebook->release_date = $request->release_date;
             $updatebook->save();
             return $updatebook;
     }
@@ -63,8 +68,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $delete = Book::where('id',$id)->delete();
-        return $delete;
+        Book::where('id',$id)->delete();
+        return (["message" => "Book deleted successfully!"]);
     }
 
 }

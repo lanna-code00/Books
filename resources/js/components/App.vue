@@ -24,13 +24,13 @@
       </v-btn>
      </router-link>
 
-       <v-btn icon>
+       <v-btn icon title="Add book">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
 
     </v-app-bar>
 
-    <v-container>
+    <v-container style="box-shadow: none; background:none">
      
       <router-view></router-view>
     </v-container>

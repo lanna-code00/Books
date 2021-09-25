@@ -21,7 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1'], function() {
     Route::post('/book', [BookController::class, 'create']);
-    Route::put('/book/{id}', [BookController::class, 'edit']);
+    Route::put('/book/{id}', [BookController::class, 'update']);
+    Route::get('/book/{id}', [BookController::class, 'edit']);
     Route::get('/book', [BookController::class, 'getBookApi']);
-    Route::delete('/book/{id}', [BookController::class, 'delete']);
+    Route::delete('/book/{id}', [BookController::class, 'destroy']);
 });

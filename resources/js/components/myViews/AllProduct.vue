@@ -36,7 +36,7 @@
               </v-btn>
              </router-link>
 
-              <v-btn icon title="Delete">
+              <v-btn icon title="Delete" @click="displayDeleteModal(book.id)" data-toggle="modal" data-target="#exampleModalCenter">
                 <v-icon>mdi-delete-variant</v-icon>
               </v-btn>
 
@@ -45,17 +45,41 @@
         </div>
 
       </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <p id="deleteMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" @click="deleteBook(deleteId)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'AllProduct',
     data(){
         return {
             allbooks: [],
+            deleteId: "",
             randomColor: '#'+Math.floor(Math.random()*16777215).toString(16)
         }
     },
@@ -71,7 +95,32 @@ export default {
                  this.$router.push({ name: '/show', params: { filteredBook } }).catch(()=>{})
                 //  this.$router.push("/path");
              }
-        }   
+        },
+
+        displayDeleteModal(id) {
+            this.deleteId = id;
+            let filteredBook = this.allbooks.find((u) => u.id == id);
+            deleteMessage.innerHTML = `Are you sure you want to delete <b class="text-danger">${filteredBook.name} ?</b>`;
+        },
+        
+        deleteBook(id){
+            let filteredBook = this.allbooks.find((u) => u.id == id);
+          
+            axios.delete(`http://localhost:8000/api/v1/book/${filteredBook.id}`).then((response) => {
+                  Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted',
+                            text: `Item deleted successfully`,
+                    })
+                  this.$router.push({ name: 'home' });
+            }).catch(() => {
+               Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong! Data not deleted',
+                         })
+            })
+        }
     },
 
     mounted(){
